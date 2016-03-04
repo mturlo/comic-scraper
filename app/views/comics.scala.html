@@ -1,0 +1,12 @@
+@(comics: Seq[model.Comic])
+
+@main("Recent comics!") {
+
+@comics.map { comic =>
+<p>
+<h1>@comic.name</h1>
+<img src="@comic.imgUrl"/>
+</p>
+}
+
+}
