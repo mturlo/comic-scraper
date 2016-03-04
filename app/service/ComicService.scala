@@ -46,6 +46,7 @@ class ComicService @Inject() (configuration: Configuration) extends LoggingCompo
 
       val absoluteImgUrl = {
         if (imgUrl.startsWith("http")) imgUrl
+        else if (imgUrl.startsWith("//")) "http:" + imgUrl
         else (rssXML \ "channel" \ "link").text + imgUrl
       }
 
