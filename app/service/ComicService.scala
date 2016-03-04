@@ -40,11 +40,18 @@ class ComicService @Inject() (configuration: Configuration) extends LoggingCompo
 
       val doc = browser.get(link)
 
-      val imgUrl = doc >> attr("src")(config.getString("imgSelector"))
+      val imgUrl: String = doc >> attr("src")(config.getString("imgSelector"))
 
       logger.debug(s"Got image URL: $imgUrl")
 
-      Comic(name, imgUrl)
+      val absoluteImgUrl = {
+        if (imgUrl.startsWith("http")) imgUrl
+        else (rssXML \ "channel" \ "link").text + imgUrl
+      }
+
+      logger.debug(s"Absolute image URL: $absoluteImgUrl")
+
+      Comic(name, absoluteImgUrl)
 
     }
 
